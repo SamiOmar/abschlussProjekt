@@ -1,11 +1,10 @@
 import kotlin.random.Random
 
 val RANDOM = Random
-
 val GUM_GUM_PISTOLE = Action("Gum-Gum Pistole", damage = RANDOM.nextInt(150, 300))
 val GUM_GUM_BAZOOKA = Action("Gum-Gum Bazooka", damage = RANDOM.nextInt(60, 100))
-val HEILZAUBER_LUFFY = Action("Fleisch Erholung", healing = RANDOM.nextInt(50, 100))
 val SCHUTZZAUBER_LUFFY = Action("Haki", damage = RANDOM.nextInt(60, 100))
+val HEILZAUBER_LUFFY = Action("Fleisch Erholung", healing = RANDOM.nextInt(50, 100))
 
 val LUFFY = Hero(
     "Monkey D. Luffy",
@@ -15,8 +14,8 @@ val LUFFY = Hero(
 
 val TATSUMAKI = Action("Tatsumaki", damage = RANDOM.nextInt(50, 90))
 val ONIGIRI = Action("Onigiri", damage = RANDOM.nextInt(60, 90))
-val HEILZAUBER_ZORO = Action("Sake", damage = RANDOM.nextInt(50, 100))
 val SCHUTZZAUBER_ZORO = Action("Santoryu", damage = RANDOM.nextInt(50, 100))
+val HEILZAUBER_ZORO = Action("Erholung", healing = RANDOM.nextInt(50, 100))
 
 val ZORO = Hero(
     "Zoro",
@@ -26,8 +25,8 @@ val ZORO = Hero(
 
 val MIRAGE_TEMPO = Action("Mirage Tempo", damage = RANDOM.nextInt(50, 80))
 val DONNERBOLZEN_TEMPO = Action("Donnerbolzen Tempo", damage = RANDOM.nextInt(40, 80))
-val HEILZAUBER_NAMI = Action("Orangentrank", healing = RANDOM.nextInt(50, 100))
 val SCHUTZZAUBER_NAMI = Action("Wetterzauber", damage = RANDOM.nextInt(50, 100))
+val HEILZAUBER_NAMI = Action("Orangentrank", healing = RANDOM.nextInt(50, 100))
 
 val NAMI = Hero(
     "Nami",
@@ -38,28 +37,28 @@ val NAMI = Hero(
 val HEROES = listOf(LUFFY, ZORO, NAMI)
 
 // Aktionen des Endgegners
-val SCHWARZES_LOCH = Action("Schwarzes Loch", damage = RANDOM.nextInt(80, 200))
-val BEFREIUNG = Action("Befreiung", damage = RANDOM.nextInt(70, 200))
+val SCHWARZESLOCH = Action("Schwarzes Loch", damage = RANDOM.nextInt(80, 200))
+val BEFREIFUNG = Action("Befreiung", damage = RANDOM.nextInt(70, 200))
 val FEUERATEM = Action("Feueratem", damage = RANDOM.nextInt(60, 200), isAreaEffect = true)
-val DUNKLER_FLUCH = Action("Dunkler Fluch", curse = true)
 val UNTERBOSS_BESCHWÖREN = Action("Unterboss Beschwören", summon = true)
-val DUNKLE_BARRIERE = Action("Dunkle Barriere", protection = true)
+val DUNKLER_FLUCH = Action("Dunkler Fluch", curse = true)
+val DUNKLER_BARRIERE_SCHUTZ = Action("Dunkle Barriere", protection = true)
 
 // Endgegner
 val BLACKBEARD = Boss(
     "Marshall D. Teach",
     350,
     50,
-    listOf(SCHWARZES_LOCH, BEFREIUNG, FEUERATEM, DUNKLER_FLUCH, UNTERBOSS_BESCHWÖREN, DUNKLE_BARRIERE)
+    listOf(UNTERBOSS_BESCHWÖREN, DUNKLER_FLUCH,DUNKLER_BARRIERE_SCHUTZ,FEUERATEM,BEFREIFUNG,SCHWARZESLOCH)
 )
 
-val ENEMIES = listOf(BLACKBEARD)
+val ENEMIES = mutableListOf<Enemy>(BLACKBEARD)
 val mutableEnemies: MutableList<Enemy> = ENEMIES.toMutableList()
 
 
 
 fun main() {
-    playSound("src/main/kotlin/audio/One Piece.wav", shouldLoop = true, volumeLevel = 0.7f)
+    //playSound("src/main/kotlin/audio/One Piece.wav", shouldLoop = true, volumeLevel = 0.7f)
     val gumPistol: String = "src/main/kotlin/audio/gum gum pistol .wav"
     val GumGumBazooka: String = "src/main/kotlin/audio/Gum-Gum Bazooka.wav"
     val Haki: String = "src/main/kotlin/audio/Haki.wav"
@@ -95,15 +94,9 @@ fun main() {
             "Seine Sandkräfte, die er von der Suna Suna no Mi hat, ermöglichen es ihm, sich in Sand zu verwandeln und Wüstenstürme zu erzeugen.")
     println("________________________________________________________________________________________")
     println("")
-
-
-
-
     fun activeCharcters(characters: List<Character>): List<Character> {
         return characters.filter { it.hp > 0 }
     }
-
-
     fun showStatus(heroes: List<Character>, enemies: List<Character>) {
         println("\nInformation zu Helden ⚔️:")
         heroes.forEachIndexed { index, hero ->
@@ -116,9 +109,6 @@ fun main() {
         }
         println()
     }
-
-
-
 
     fun showAction(hero: Character) {
         println("\u001B[34mVerfügbare Aktionen für ${hero.name}:\u001B[0m")
@@ -153,8 +143,6 @@ fun main() {
                     selectedHero.useBackpack(selectedHero)
                     selectedHero.hasUsedBackpack = true // Setze den Indikator, dass der Rucksack benutzt wurde
                     hasAnyHeroUsedBackpackThisRound = true // Setze den globalen Indikator, dass der Rucksack benutzt wurde
-
-
                 } else {
                     if (selectedHero.hasUsedBackpack)
                         println("${selectedHero.name} hat in dieser Runde bereits den Rucksack benutzt!")
@@ -216,40 +204,38 @@ fun main() {
         }
 
     }
-    fun doActionForEnemies(enemies: MutableList<Enemy>, heroes: List<Hero>) {
+    fun doActionForEnemies(heroes: List<Hero>) {
         val newEnemiesToAdd = mutableListOf<Enemy>()
 
         println("Beginne die Aktionen der Gegner.")
+        var underBossCret = false
 
-        // Iteriere über die Gegnerliste
-        enemies.forEach { enemy ->
-            println("Überprüfe Gegner: ${enemy.name} mit ${enemy.hp} HP")
+        ENEMIES.forEach { enemy ->
+            println("Aktuelle stand der Gegner: ${enemy.name} mit ${enemy.hp} HP")
             if (enemy.hp > 0) {
                 val action = enemy.actions.shuffled().first()
-                println("Gewählte Aktion von ${enemy.name} ist: ${action.name}")
+                println("Die Gewählte Aktion von ${enemy.name} ist: ${action.name}")
 
                 when {
                     action.summon -> {
                         // Beschwören eines Unterbosses
                         println("${enemy.name} beschwört einen Unterboss!")
-                        val sandBlast = Action(name = "Sand Blast", damage = 15, isAreaEffect = true)
-                        val quicksand = Action(name = "Quicksand", damage = 0, summon = true)
-                        val sandstorm = Action(name = "Sandstorm", damage = 20, isAreaEffect = true, speedUp = true)
-                        val desertSpada = Action(name = "Desert Spada", damage = 30, curse = true)
 
-                        val underboss = Underboss("Crokodil", 150, 10, listOf(sandBlast, quicksand, sandstorm, desertSpada))
-
-                        newEnemiesToAdd.add(underboss) // Füge den Unterboss zur temporären Liste hinzu
-                        println("Ein Unterboss wurde auf das Schlachtfeld gerufen!")
+                        if (!hasSummonedUnderboss) {
+                            underBossCret = true
+                            hasSummonedUnderboss = true
+                            println("Ein Unterboss wurde auf das Schlachtfeld gerufen!")
+                        }
                     }
+
                     action.isAreaEffect -> {
                         // Aktionen mit Flächeneffekt
-                        println("${enemy.name} verwendet ${action.name}, ein Flächeneffekt!")
                         heroes.filter { it.hp > 0 }.forEach { hero ->
                             hero.takeDamage(action.damage)
                             println("${hero.name} erleidet ${action.damage} Schadenspunkte durch ${action.name}.")
                         }
                     }
+
                     action.curse -> {
                         // Verfluchte Aktionen
                         val target = heroes.filter { it.hp > 0 }.shuffled().first()
@@ -258,13 +244,19 @@ fun main() {
                     }
                 }
             }
+
         }
-
+if (underBossCret){
+    val sandBlast = Action(name = "Sand Blast", damage = 15, isAreaEffect = true)
+    val quicksand = Action(name = "Quicksand", damage = 0, summon = true)
+    val sandstorm = Action(name = "Sandstorm", damage = 20, isAreaEffect = true, speedUp = true)
+    val desertSpada = Action(name = "Desert Spada", damage = 30, curse = true)
+    val underboss = Underboss("Crokodil", 150, 10, listOf(sandBlast, quicksand, sandstorm, desertSpada))
+    ENEMIES.add(underboss) // Füge den Unterboss zur temporären Liste hinzu
+}
         // Nachdem alle Gegner durchlaufen wurden, füge alle neuen Gegner zur Hauptliste hinzu
-        enemies.addAll(newEnemiesToAdd)
+        newEnemiesToAdd.addAll(newEnemiesToAdd)
     }
-
-
 
     fun applyCurseDamage(heroes: List<Character>) {
         heroes.forEach { hero ->
@@ -275,10 +267,9 @@ fun main() {
             }
         }
     }
-
      fun removeCurseIfNecessary(heroes: List<Character>) {
         heroes.forEach { hero ->
-            if (hero.isCursed && hero.hp <= hero.hp * 0.5) {
+            if (hero.isCursed && hero.hp <= hero.hp * 0.2) {
                 hero.isCursed = false
                 println("${hero.name} ist nun vom Fluch befreit.")
             }
@@ -292,8 +283,7 @@ fun main() {
         println("____________________________________________________________________________")
         doActionForHero()
         println("____________________________________________________________________________")
-        doActionForEnemies(ENEMIES.toMutableList(), HEROES)
-
+        doActionForEnemies(HEROES)
     }
     if (activeCharcters(HEROES).isNotEmpty()) {
         println("Die Helden haben gewonnen!")

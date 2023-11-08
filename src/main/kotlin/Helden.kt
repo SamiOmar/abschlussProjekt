@@ -1,5 +1,3 @@
-// Import statements for required classes should be here.
-
 class Hero(name: String, hp: Int, defensiveValue: Int, actions: List<Action>, val backpack: Backpack = Backpack()) : Character(name, hp, defensiveValue, actions) {
     var hasUsedBackpack = false
 
@@ -11,15 +9,14 @@ class Hero(name: String, hp: Int, defensiveValue: Int, actions: List<Action>, va
             println("$name hat in dieser Runde bereits den Rucksack benutzt!")
         }
     }
-
-    private fun interactWithBackpack(target: Character) {
+     fun interactWithBackpack(target: Character) {
         println("\u001B[34mIn deinem Rucksack hast du:\u001B[0m")
         println("1. Heiltränke: ${backpack.healthDrink}")
         println("2. Vitamine: ${backpack.vitamins}")
         println("3. Fleisch: ${backpack.meat}")
         println("Bitte wähle einen Gegenstand zum Verwenden (1-3) oder drücke eine andere Taste, um zurückzugehen.")
 
-        val userInput = readLine()
+        val userInput = readln()
         when (userInput) {
             "1" -> useItem("healthDrink", target)
             "2" -> useItem("vitamins", target)

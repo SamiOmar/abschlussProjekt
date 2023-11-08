@@ -5,9 +5,6 @@ open class Character(var name: String, var hp: Int, var defensiveValue: Int, var
     var totalHp: Int = 100
     val sakeErholung =
         Action(name = "Sake Erholung", healing = 0, damage = 0, defensiveValue = 0, isAreaEffect = false, curse = false)
-
-
-
     open fun doActions(action: Action, target: Character) {
         when {
             action.damage > 0 -> {
