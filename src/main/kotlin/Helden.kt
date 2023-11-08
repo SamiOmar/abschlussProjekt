@@ -1,6 +1,16 @@
-class Hero(name: String, hp: Int, defensiveValue: Int, actions: List<Action>, val backpack: Backpack = Backpack()) : Character(name, hp, defensiveValue, actions) {
-    var hasUsedBackpack = false
+// Definiert eine Klasse "Hero", die von "Character" erbt
+class Hero(
+    name: String, // Name des Helden
+    hp: Int, // Lebenspunkte des Helden
+    defensiveValue: Int, // Verteidigungswert des Helden
+    actions: List<Action>, // Liste von Aktionen, die der Held ausführen kann
+    val backpack: Backpack = Backpack() // Rucksack des Helden mit Gegenständen
+) : Character(name, hp, defensiveValue, actions) {
 
+    var isStunned = false // Zeigt an, ob der Held betäubt ist
+    var isBlinded = false // Zeigt an, ob der Held geblendet ist
+
+    // Funktion, die die Interaktion mit dem Rucksack ermöglicht
     fun useBackpack(target: Character) {
         if (!hasUsedBackpack) {
             interactWithBackpack(target)
@@ -9,16 +19,18 @@ class Hero(name: String, hp: Int, defensiveValue: Int, actions: List<Action>, va
             println("$name hat in dieser Runde bereits den Rucksack benutzt!")
         }
     }
-     fun interactWithBackpack(target: Character) {
+
+    // Hilfsfunktion für "useBackpack", die die Interaktion mit dem Rucksack abwickelt
+    fun interactWithBackpack(target: Character) {
         println("\u001B[34mIn deinem Rucksack hast du:\u001B[0m")
-        println("1. Heiltränke: ${backpack.healthDrink}")
+        println("1. Heiltränke: ${backpack.healthPotions}")
         println("2. Vitamine: ${backpack.vitamins}")
         println("3. Fleisch: ${backpack.meat}")
         println("Bitte wähle einen Gegenstand zum Verwenden (1-3) oder drücke eine andere Taste, um zurückzugehen.")
 
-        val userInput = readln()
+        val userInput = readLine()
         when (userInput) {
-            "1" -> useItem("healthDrink", target)
+            "1" -> useItem("healthPotion", target)
             "2" -> useItem("vitamins", target)
             "3" -> useItem("meat", target)
             else -> {
@@ -28,35 +40,33 @@ class Hero(name: String, hp: Int, defensiveValue: Int, actions: List<Action>, va
         }
     }
 
-    private fun useItem(itemType: String, target: Character) {
+    // Funktion, die die Verwendung eines bestimmten Gegenstands aus dem Rucksack handhabt
+    fun useItem(itemType: String, target: Character) {
         when (itemType) {
-            "healthDrink" -> {
-                if (backpack.healthDrink > 0) {
+            "healthPotion" -> {
+                if (backpack.healthPotions > 0) {
                     val healAmount = minOf(50, target.totalHp + target.hp)
                     target.hp += healAmount
-                    backpack.healthDrink
+                    backpack.healthPotions--
                     println("$name verwendet einen Heiltrank und erhält \u001B[32m$healAmount HP\u001B[0m! Seine gesamte HP ist jetzt ${target.hp}.")
                 } else {
                     println("Du hast keine Heiltränke mehr.")
                 }
             }
-
             "vitamins" -> {
                 if (backpack.vitamins > 0) {
-                    val bonusHp = 20
-                    target.totalHp += bonusHp
-                    backpack.vitamins
-                    println("$name verwendet Vitamine und erhöht seine Gesamt-HP um \u001B[32m$bonusHp\u001B[0m.")
+                    target.totalHp += 20
+                    backpack.vitamins--
+                    println("$name verwendet Vitamine und erhöht seine Gesamt-HP um \u001B[32m20\u001B[0m.")
                 } else {
                     println("Du hast keine Vitamine mehr.")
                 }
             }
-
             "meat" -> {
                 if (backpack.meat > 0) {
                     val healAmount = minOf(30, target.totalHp + target.hp)
                     target.hp += healAmount
-                    backpack.meat
+                    backpack.meat--
                     println("$name isst Fleisch und heilt \u001B[32m$healAmount HP\u001B[0m!")
                 } else {
                     println("Du hast kein Fleisch mehr.")
@@ -65,10 +75,15 @@ class Hero(name: String, hp: Int, defensiveValue: Int, actions: List<Action>, va
         }
     }
 
+    // Funktion zum Zurücksetzen des Zustands, ob der Rucksack benutzt wurde
     fun resetBackpackUsage() {
         hasUsedBackpack = false
     }
 }
 
-class Backpack(var healthDrink: Int = 3, var vitamins: Int = 3, var meat: Int = 3)
-
+// Definiert eine Klasse "Backpack", die verschiedene Gegenstände speichert
+class Backpack(
+    var healthPotions: Int = 3, // Anzahl der Heiltränke
+    var vitamins: Int = 3, // Anzahl der Vitamine
+    var meat: Int = 3 // Anzahl von Fleischstücken
+)
