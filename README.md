@@ -4,29 +4,32 @@
 <br>
 
 <p align="center">
-  <img src="img/Untitled.png" />
+  <img src="img/img123.png" alt="Klassendiagramm"/>
 </p>
 
-<h1 style="color: #005780;" align="center">One Piece Fantasie-Kampfarena - Spielanleitung & Features</h1>
+# Golden Syntax: Ein One Piece Text-Kampfspiel
 
-<h2 style="color: #1034A6;">Spielanleitung</h2>
+Willkommen bei Golden Syntax, einem aufregenden Text-basierten Kampfspiel, das im Universum der beliebten Serie "One Piece" angesiedelt ist. Stellen Sie Ihr Team aus heldenhaften Charakteren zusammen und stellen Sie sich den Herausforderungen gegen eine Vielzahl von Gegnern.
 
-<p>Starte dein One Piece Abenteuer in dieser rundenbasierten Kampfarena. Wähle deine Crew aus ikonischen Charakteren und meistere Kämpfe gegen berühmte Gegner der Serie.</p>
+## Spielregeln
 
-<h3 style="color: #FBB917;">Spielstart</h3>
-<ul>
-<li><strong>Öffne das Spiel:</strong> In der Kommandozeile beginnt dein Abenteuer.</li>
-<li><strong>Crew zusammenstellen:</strong> Wähle Charaktere wie Ruffy oder Zorro mit spezifischen Fähigkeiten.</li>
-</ul>
+Im Herzen von Golden Syntax liegt eine rundenbasierte Kampfdynamik, in der die richtige Taktik und Teamzusammenstellung über Sieg oder Niederlage entscheiden. Hier sind die Spielregeln im Detail:
 
-<h3 style="color: #FBB917;">Rundenablauf</h3>
-<ul>
-<li><strong>Aktion wählen:</strong> Jeder Charakter hat eine Aktion pro Runde.</li>
-<li><strong>Kampfhandlung:</strong> Aktionen werden ausgeführt, Gegner reagieren.</li>
-<li><strong>Status prüfen:</strong> Überwache die Gesundheit und spezielle Zustände.</li>
-</ul>
+1. **Helden Auswahl:**
+   Beginnen Sie jedes Gefecht mit der Auswahl der Helden, die gegen das gegnerische Team antreten sollen.
 
-<h3 style="color: #FBB917;">Siegbedingungen</h3>
-<ul>
-<li><strong>Besiege alle Gegner:</strong> Sei der letzte, der auf dem Schlachtfeld steht.</li>
-</ul>
+2. **Aktionen und Runden:**
+    - Jeder Held hat ein Arsenal von vier Aktionen zur Verfügung, um in seinem Zug anzugreifen oder zu verteidigen.
+    - Zusätzlich zu ihren Aktionen hat jeder Held einmal pro Spiel einen Rucksack mit heilenden und stärkenden Gegenständen zur Verfügung.
+
+3. **Kampfablauf:**
+    - Die Helden Ihres Teams führen ihre Aktionen nacheinander aus.
+    - Nachdem alle Helden agiert haben, ist das gegnerische Team an der Reihe, ihre Angriffe durchzuführen.
+    - Sobald beide Teams ihre Züge gemacht haben, beginnt eine neue Runde.
+
+4. **Spielende:**
+   Das Spiel endet, wenn alle Mitglieder eines Teams besiegt sind. Die Überlebenden werden als Sieger gekrönt.
+
+5. **Strategie:**
+   Entscheidend ist, wie Sie Ihre Helden und deren Aktionen koordinieren. Die richtige Reihenfolge und das Timing der Angriffe, kombiniert mit dem klugen Einsatz des Rucksacks, können über das Schicksal Ihres Teams entscheiden.
+
